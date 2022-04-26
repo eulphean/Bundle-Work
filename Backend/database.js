@@ -12,7 +12,11 @@ const connString = 'postgresql://localhost/bundle?user=amaykataria&password=abc1
 console.log('Database Connection String: ' + connString);
 
 const pool = new Pool({
-    connectionString: connString
+    user: 'amaykataria',
+    password: 'abc123',
+    database: 'bundle',
+    host: 'localhost',
+    port: 5432
 }); 
 
 module.exports = {    
