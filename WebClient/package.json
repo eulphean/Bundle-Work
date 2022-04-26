@@ -1,0 +1,16 @@
+{
+  "name": "starting-line",
+  "version": "1.0.0",
+  "description": "Lesson 1 for Rachel Chu",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.26.7",
+    "gulp": "^4.0.2",
+    "pg": "^8.7.0"
+  },
+  "author": "Amay Kataria",
+  "license": "ISC"
+}

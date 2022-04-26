@@ -1,0 +1,29 @@
+/* Flex-wrap, justify-content, align-items,
+align-content */
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 300px;
+    height: 300px;
+    background-color: green;
+    color: white
+}
+
+.buttonContainer {
+    margin-top: 20px;
+}
+
+.keyContainer {
+    margin-top: 20px;
+}
+
+#key {
+    width: 30px;
+}
+
+#message {
+    margin-top: 10px;
+}
