@@ -3,24 +3,41 @@ let url = "http://localhost:5001/";
 let messageBox; 
 let inputBox; 
 let keyBox;
+let dbImage;
 
 // ------------------------- Button Callback  --------------------------
 function saveToDb() {
     let key = keyBox.value; 
     let message = inputBox.value; 
 
-    // The JSON bundle. 
+    // JSON bundle.  
     let jsonBundle = {};
+    // Load text. 
     jsonBundle['text'] = [message]; 
-    jsonBundle['images'] = []; 
-    jsonBundle = JSON.stringify(jsonBundle);
-    saveBundle(key, jsonBundle);
+
+    // Load images and save.
+    fetch('src/images/hello.png')
+    .then(response => {
+        return response.blob()
+    })
+    .then(blob => {
+        let reader = new FileReader();
+        reader.readAsDataURL(blob); 
+        reader.onloadend = function() {
+            var base64data = reader.result;    
+            // Populate images.            
+            jsonBundle['images'] = [base64data, base64data, base64data, base64data, base64data]; 
+            jsonBundle = JSON.stringify(jsonBundle);
+            saveBundle(key, jsonBundle);
+        }
+    });
 }
 
 function retrieve() {
     let key = document.getElementById("key").value; 
     retrieveBundle(key);
 }
+
 
 // ------------------------- SERVER REQUESTS --------------------------
 function saveBundle(key, jsonBundle) {
@@ -35,15 +52,21 @@ function retrieveBundle(key) {
     let postData = {'key': key };
     let postUrl = url + 'retrieve';
     httpPost(postUrl, postData, function(response) {
+        console.log('Hello');
         if (response === 'empty') {
             messageBox.innerHTML = 'No Data';
         } else {
-            // Extract the required data from here. 
             response = JSON.parse(response);
-            let text = response['text'];
+            console.log(response);
+            let text = response['text'][0];
+
+            // TODO: Save some metadata here as well like the
+            // size of the image, its position, etc. 
+            let imgSource = response['images'][0];
 
             // Update input box.
             inputBox.value = text;
+            dbImage.src = imgSource; 
 
             // Update message box.
             messageBox.innerHTML = 'Data Found';
@@ -57,21 +80,12 @@ function setup() {
     messageBox = document.getElementById('message');
     inputBox = document.getElementById("intext");
     keyBox = document.getElementById("key"); 
+    dbImage = document.getElementById('set');
 }
 
 function draw() {
 
 }
-
-
-
-
-
-
-
-
-
-
 
 
 

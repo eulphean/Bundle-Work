@@ -6,8 +6,10 @@ body {
 }
 
 .container {
-    width: 300px;
-    height: 300px;
+    padding-left: 50px;
+    padding-top: 50px;
+    width: 500px;
+    height: 500px;
     background-color: green;
     color: white
 }
@@ -26,4 +28,10 @@ body {
 
 #message {
     margin-top: 10px;
+}
+
+.hello {
+    margin-top: 25px;
+    width: 150px;
+    height: 150px;
 }

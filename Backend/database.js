@@ -24,9 +24,54 @@ module.exports = {
         return onWriteDatabase(key, bundle)
     },
 
+    saveImage: function(key, imgData) {
+        return onWriteImage(key, imgData);
+    },
+
     readData: function(key) {
         return onReadDatabase(key);
+    },
+
+    readImages: function(key) {
+        return onReadImages(key);
     }
+}
+
+function onWriteImage(key, imgData) {
+    let promise = new Promise((resolve, reject) => {
+        pool.query('INSERT INTO images (key, data) VALUES ($1, $2)', [key, imgData], (error, result) => {
+            if (error) {
+                console.log('Some Error');
+                throw error;
+            }
+
+            console.log('Success: ' + key + ' is new image in the database.');
+            resolve('Success: New entry with key: ' + key);
+        })
+    }); 
+    return promise;
+}
+
+function onReadImages(key) {
+    let promise = new Promise((resolve, reject) => {
+        pool.query('SELECT * FROM images WHERE key=$1', [key], (error, result) => {
+            if (error) {
+                console.log('Some error');
+                throw(error);
+            }
+
+            console.log('Success: entries table successfully read.');
+            let entries = result.rows; 
+            if (entries.length > 0) {
+                console.log(entries);
+                let imageData = entries[0]['data'];
+                resolve(imageData); 
+            } else {
+                resolve('empty');
+            }            
+        }); 
+    }); 
+    return promise;
 }
 
 function onWriteDatabase(key, bundle) {
